@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       gridTemplateColumns: {
-        bookList: "repeat(auto-fill, minmax(250px, 1fr))",
+        bookList: "repeat(auto-fill, minmax(200px, 1fr))",
       },
     },
   },

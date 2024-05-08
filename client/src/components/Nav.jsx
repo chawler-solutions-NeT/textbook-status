@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
+import { ROUTES } from "../constants/routes";
 
 const Nav = () => {
   const navigation = [
-    { path: "/", name: "List Book" },
-    { path: "/add", name: "Add Book" },
+    { path: ROUTES.LIST_BOOKS, name: "List Book" },
+    { path: ROUTES.ADD_BOOK, name: "Add Book" },
   ];
   return (
     <nav className="mt-8 gap-4 flex justify-center">

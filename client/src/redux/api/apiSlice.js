@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { API_CONSTANTS } from "../../constants/apiConstants";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000/api/",
+  baseUrl: API_CONSTANTS.BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
