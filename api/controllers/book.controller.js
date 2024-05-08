@@ -34,7 +34,7 @@ export const getBook = async (req, res) => {
 // @route POST /book
 // @access Public
 export const addNewBook = async (req, res) => {
-  const { title, author } = req.body;
+  const { title, author, status } = req.body;
 
   // Confirm data
   if (!title || !author) {
@@ -42,7 +42,7 @@ export const addNewBook = async (req, res) => {
   }
 
   // Create and store the new user
-  const book = await Book.create({ title, author });
+  const book = await Book.create({ title, author, status });
 
   if (book) {
     // Created

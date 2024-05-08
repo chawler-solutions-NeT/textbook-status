@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-const BookForm = ({ book, handleOnSubmit }) => {
+const BookForm = ({ isLoading, book, handleOnSubmit }) => {
   const [formData, setFormData] = useState({
     title: book ?? "",
     author: book ?? "",
@@ -57,7 +57,7 @@ const BookForm = ({ book, handleOnSubmit }) => {
         }`}
         disabled={disabledSubmit}
       >
-        Submit
+        {isLoading ? "Loading" : "Submit"}
       </button>
     </form>
   );
