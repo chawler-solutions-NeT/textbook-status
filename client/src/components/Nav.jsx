@@ -1,16 +1,25 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
+  const navigation = [
+    { path: "/", name: "List Book" },
+    { path: "/add", name: "Add Book" },
+  ];
   return (
-    <nav className="">
-      <ul className="mx-auto  max-w-lg flex  justify-center">
-        <li className="hidden sm:inline text-slate-700 hover:underline">
-          <Link to="/">List Books</Link>
-        </li>
-        <li className=" hidden sm:inline text-slate-700 hover:underline">
-          <Link to="/add">Add Book</Link>
-        </li>
-      </ul>
+    <nav className="mt-8 gap-4 flex justify-center">
+      {navigation.map((nav) => (
+        <NavLink
+          key={nav.name}
+          to={nav.path}
+          className={({ isActive }) =>
+            isActive
+              ? "border px-8 py-2 text-white bg-[#222]"
+              : "border px-8 py-2 text-black bg-white"
+          }
+        >
+          {nav.name}
+        </NavLink>
+      ))}
     </nav>
   );
 };
