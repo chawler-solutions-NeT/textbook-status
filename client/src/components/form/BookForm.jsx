@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const BookForm = ({ book }) => {
-  const navigate = useNavigate();
+const BookForm = ({ book, handleOnSubmit }) => {
   const [formData, setFormData] = useState({
     title: book ?? "",
     author: book ?? "",
@@ -32,13 +30,13 @@ const BookForm = ({ book }) => {
 
   const disabledSubmit = !formData.title || !formData.author;
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    navigate("/");
+    handleOnSubmit(formData);
   };
 
   return (
-    <form className="m-8 max-w-sm mx-auto" onSubmit={handleSubmit}>
+    <form className="m-8 max-w-sm mx-auto" onSubmit={onSubmit}>
       {renderInputField("Book Title", "Enter title of book...", "title")}
       {renderInputField("Book Author", "Enter name of author...", "author")}
       <div className="flex items-center gap-2 mb-4">
