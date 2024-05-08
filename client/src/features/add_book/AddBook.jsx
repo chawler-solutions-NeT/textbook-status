@@ -12,7 +12,7 @@ const AddBook = () => {
     navigate("/");
   };
   return (
-    <div className="addForm">
+    <div className="p-8">
       <BookForm isLoading={isLoading} handleOnSubmit={handleOnSubmit} />
     </div>
   );

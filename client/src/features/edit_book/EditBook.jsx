@@ -40,7 +40,7 @@ const EditBook = () => {
   }, [getBook, params]);
 
   return (
-    <div className="addForm">
+    <div className="p-8">
       {!isGetLoading && (
         <BookForm
           book={book}
