@@ -8,7 +8,6 @@ const AddBook = () => {
   const [addBook, { isLoading }] = useAddNewBookMutation();
 
   const handleOnSubmit = async (book) => {
-    console.log(book);
     await addBook(book);
     navigate("/");
   };

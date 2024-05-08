@@ -1,23 +1,54 @@
 import { useNavigate, useParams } from "react-router-dom";
-import BookForm from "./form/BookForm";
 import { useEffect, useState } from "react";
+import BookForm from "../../components/form/BookForm";
+import { useGetBookMutation } from "../list_books/listBookApiSlice";
+import { useUpdateBookMutation } from "./editBookApiSlice";
 
 const EditBook = () => {
-  const { id } = useParams();
+  const params = useParams();
   const navigate = useNavigate();
-  const [book, setBook] = useState({});
+  const [book, setBook] = useState(null);
+  const [error, setError] = useState(null);
+  const [updateBook, { isLoading }] = useUpdateBookMutation();
+  const [getBook, { isLoading: isGetLoading }] = useGetBookMutation();
 
-  const handleOnSubmit = (book) => {
-    navigate("/");
+  const handleOnSubmit = async (book) => {
+    const { id } = params;
+    try {
+      const payload = { ...book, id };
+      await updateBook(payload);
+      navigate("/");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   useEffect(() => {
-    setBook({});
-  });
+    const { id } = params;
+
+    const fetchBook = async () => {
+      try {
+        setError(null);
+        const result = await getBook(id).unwrap();
+        setBook(result);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchBook();
+  }, [getBook, params]);
 
   return (
     <div className="addForm">
-      <BookForm book={book} handleSubmit={handleOnSubmit} />
+      {!isGetLoading && (
+        <BookForm
+          book={book}
+          isUpdate={true}
+          isLoading={isLoading}
+          handleOnSubmit={handleOnSubmit}
+        />
+      )}
     </div>
   );
 };
