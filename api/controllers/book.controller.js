@@ -7,11 +7,6 @@ export const getAllBooks = async (req, res) => {
   // Get all books from database
   const books = await Book.find().lean();
 
-  // If no books
-  if (!books?.length) {
-    return res.status(400).json({ message: "No book found" });
-  }
-
   res.json(books);
 };
 
