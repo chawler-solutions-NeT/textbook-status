@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import BookTile from "./BookTile";
 import { useDeleteBookMutation, useGetBooksMutation } from "./listBookApiSlice";
-import { Link } from "react-router-dom";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -16,7 +16,7 @@ const BookList = () => {
         const result = await getBooks().unwrap();
         setBooks(result);
       } catch (error) {
-        setError(error.message);
+        setError(error);
       }
     };
 
@@ -26,31 +26,51 @@ const BookList = () => {
   const handleDeleteBook = async (bookId) => {
     try {
       await deleteBook(bookId);
-      setBooks((prev) => prev.filter((book) => book._id !== bookId));
+      setBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
     } catch (error) {
-      print(error);
+      setError(error);
     }
   };
 
   return (
-    <div className="mx-auto p-8 mt-8 grid grid-cols-bookList gap-4">
-      {isLoading ? (
-        <p>Loading...</p> // Render loading state
-      ) : books.length ? (
-        books.map((book) => (
-          <BookTile
-            book={book}
-            key={book._id}
-            handleDeleteBook={handleDeleteBook}
-          />
-        ))
-      ) : (
-        <p className="flex flex-col gap-4 text-center col-span-3 mt-8 text-gray-700">
-          No books available, Please add some books!{" "}
-          <Link to="/add" className="font-bold cursor-pointer hover:underline">
-            Add
-          </Link>
-        </p>
+    <div className="mx-auto p-8 mt-8">
+      {isLoading && (
+        <div className="flex justify-center items-center h-40">
+          <p>Loading...</p>
+        </div>
+      )}
+
+      {!isLoading && !error && books.length > 0 && (
+        <div className="grid justify-center items-center grid-cols-bookList gap-4">
+          {books.map((book) => (
+            <BookTile
+              key={book._id}
+              book={book}
+              handleDeleteBook={handleDeleteBook}
+            />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && !error && books.length === 0 && (
+        <div>
+          <p className="flex flex-col gap-4 text-center col-span-3 mt-8 text-gray-700">
+            No books available. <br />
+            Please add some books!{" "}
+            <Link
+              to="/add"
+              className="font-bold cursor-pointer hover:underline"
+            >
+              Add
+            </Link>
+          </p>
+        </div>
+      )}
+
+      {!isLoading && error && (
+        <div className="flex justify-center items-center h-40 text-red-500 mt-4">
+          <p>An error occurred: {error.message}</p>
+        </div>
       )}
     </div>
   );
